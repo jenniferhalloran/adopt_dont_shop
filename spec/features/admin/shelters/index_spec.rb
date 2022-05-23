@@ -8,9 +8,6 @@ describe 'the admin application show page', type: :feature do
   let!(:pet_2) {Pet.create(adoptable: true, age: 4, breed: 'bulldog', name: 'Tomato', shelter_id: shelter_2.id)}
   let!(:pet_3) {Pet.create(adoptable: true, age: 2, breed: 'mainecoon', name: 'Ollie', shelter_id: shelter_3.id)}
 
-
-
-
   it "lists all shelters in reverse alphabetical order" do
     visit '/admin/shelters'
 
@@ -51,7 +48,7 @@ describe 'the admin application show page', type: :feature do
     app_3.status = 'Pending'
     app_3.save
     visit '/admin/shelters'
-
+    save_and_open_page
     within "#pending-shelters" do
       expect('Aurora shelter').to appear_before('Fancy pets of Colorado')
       expect('Fancy pets of Colorado').to appear_before('RGV animal shelter')
