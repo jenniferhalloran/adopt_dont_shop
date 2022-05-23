@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'the admin application show page', type: :feature do
+describe 'the admin application index page', type: :feature do
   let!(:shelter_1) {Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)}
   let!(:shelter_2) {Shelter.create!(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)}
   let!(:shelter_3) {Shelter.create!(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)}
@@ -15,6 +15,23 @@ describe 'the admin application show page', type: :feature do
       expect('RGV animal shelter').to appear_before('Fancy pets of Colorado')
       expect('Fancy pets of Colorado').to appear_before('Aurora shelter')
     end
+  end
+
+  it "links to the admin application show page for each shelter " do
+    visit '/admin/shelters'
+    click_link('Aurora shelter')
+
+    expect(current_path).to eq("/admin/shelters/#{shelter_1.id}")
+
+    visit '/admin/shelters'
+    click_link('RGV animal shelter')
+
+    expect(current_path).to eq("/admin/shelters/#{shelter_2.id}")
+
+    visit '/admin/shelters'
+    click_link('Fancy pets of Colorado')
+    
+    expect(current_path).to eq("/admin/shelters/#{shelter_3.id}")
   end
 
 
