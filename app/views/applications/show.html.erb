@@ -26,8 +26,8 @@
 
 
 <div id="matching-pets">
-  <p>Matching Pets: </p>
   <% if !@matching_pets.nil? %>
+  <p><b> Matching Pets: </b></p>
     <% @matching_pets.each do |pet| %>
         <p> <%= pet.name %>
           <%= button_to "Adopt this pet", "/pet_applications", method: :post, params: {:application_id => @application.id, :pet_id => pet.id} %>
