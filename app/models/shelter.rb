@@ -17,13 +17,17 @@ class Shelter < ApplicationRecord
   end
 
   def self.rev_alphabetize
-    Shelter.find_by_sql("SELECT * FROM shelters ORDER BY name DESC;")
+    find_by_sql("SELECT * FROM shelters ORDER BY name DESC;")
   end
 
   def self.shelters_with_pending_apps
-    Shelter.joins( pets: :applications).where("applications.status = 'Pending'")  
+    joins( pets: :applications).where("applications.status = 'Pending'")
   end
 
+  def self.name_and_address(shelter_id)
+    find_by_sql("SELECT name, street_address, city, state, zip_code FROM shelters WHERE shelters.id = #{shelter_id}")
+  end
+  
   def pet_count
     pets.count
   end
