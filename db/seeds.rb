@@ -9,9 +9,9 @@ Shelter.destroy_all
 app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
 app_2 = Application.create!(name: 'Jenn', street_address: '2 Wildflower Lane', city: 'Aurora', state: 'CO', zip_code: 80010)
 
-shelter_1 = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
-shelter_2 = Shelter.create!(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)
-shelter_3 = Shelter.create!(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
+shelter_1 = Shelter.create!(name: 'Aurora shelter', street_address: '15 Fluff Lane', state: 'CO', zip_code: 80152, city: 'Aurora', foster_program: false, rank: 9)
+shelter_2 = Shelter.create!(name: 'RGV animal shelter', street_address: '2 Armadillo Street' city: 'Harlingen', state: 'TX', zip_code: 95647 foster_program: false, rank: 5)
+shelter_3 = Shelter.create!(name: 'Fancy pets of Colorado', street_address: '14 Dapper Avenue' city: 'Denver', state: 'CO', zip_code: 80152 foster_program: true, rank: 10)
 
 pet_1 = Pet.create!(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true, shelter_id: shelter_1.id)
 pet_2 = Pet.create!(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true, shelter_id: shelter_1.id)
