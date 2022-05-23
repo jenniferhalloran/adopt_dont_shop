@@ -9,6 +9,6 @@
 <div id = "pending-shelters">
   <h3>Shelters with Pending Applications: </h3>
   <% @pending.each do |shelter| %>
-  <%= link_to "#{shelter.name}", "/admin/shelters/#{shelter.id}" %>
+  <p> <%= link_to "#{shelter.name}", "/admin/shelters/#{shelter.id}" %> </p>
   <% end %>
 </div>
