@@ -14,4 +14,12 @@ class Application < ApplicationRecord
 		pets.count > 0
 	end
 
+	def approved?
+		pet_applications.all?{ |pet_app| pet_app.application_status  == "Approved"  }
+	end
+
+	def rejected?
+		pet_applications.any?{ |pet_app| pet_app.application_status  == "Rejected"  }
+
+	end
 end
