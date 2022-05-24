@@ -10,7 +10,7 @@ app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city:
 app_2 = Application.create!(name: 'Jenn', street_address: '2 Wildflower Lane', city: 'Aurora', state: 'CO', zip_code: 80010)
 
 
-shelter_1 = Sheltercreate!(name: 'Aurora shelter', street_address: '15 Fluff Lane', state: 'CO', zip_code: 80152, city: 'Aurora', foster_program: false, rank: 9)
+shelter_1 = Shelter.create!(name: 'Aurora shelter', street_address: '15 Fluff Lane', state: 'CO', zip_code: 80152, city: 'Aurora', foster_program: false, rank: 9)
 shelter_2 = Shelter.create!(name: 'RGV animal shelter', street_address: '2 Armadillo Street', city: 'Harlingen', state: 'TX', zip_code: 95647, foster_program: false, rank: 5)
 shelter_3 = Shelter.create!(name: 'Fancy pets of Colorado', street_address: '14 Dapper Avenue', city: 'Denver', state: 'CO', zip_code: 80152, foster_program: true, rank: 10)
 
