@@ -50,8 +50,27 @@ describe 'admin shelter show page', type: :feature do
       app_2.save
 
       visit "/admin/shelters/#{shelter_1.id}"
-      
+
       expect(page).to have_content("2 pets have been adopted from this shelter!")
+    end
+
+    it "shows pets that have pending applications and need action" do
+      app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
+      pet_app = PetApplication.create!(pet: @tot, application: app_1)
+
+      visit "/admin/shelters/#{shelter_1.id}"
+
+      within "#action_required" do
+        expect(page).to have_content("Tater Tot")
+      end
+
+      pet_app.update(application_status: "Rejected")
+      visit "/admin/shelters/#{shelter_1.id}"
+
+      within "#action_required" do
+        expect(page).to_not have_content("Tater Tot")
+      end
+
     end
   end
 

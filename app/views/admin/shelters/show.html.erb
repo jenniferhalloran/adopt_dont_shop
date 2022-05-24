@@ -11,4 +11,11 @@
   <li><b><%= @shelter_info.adopted_pets_count %></b> pets have been adopted from this shelter! :D </li>
 </ul>
 
-<h2> Action Required </h2>
+<div id = "action_required">
+  <h2> Action Required: </h2>
+  <h3> Pets Pending Review: </h3>
+  <ul><% @shelter_info.pending_pets.each do |pet| %>
+    <li> <%= pet.name %> </li>
+    <% end %>
+  </ul>
+</div>
