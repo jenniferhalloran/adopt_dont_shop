@@ -13,9 +13,9 @@ RSpec.describe Shelter, type: :model do
   end
 
   before(:each) do
-    @shelter_1 = Shelter.create(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
-    @shelter_2 = Shelter.create(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)
-    @shelter_3 = Shelter.create(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
+    @shelter_1 = Shelter.create!(name: 'Aurora shelter', street_address: '15 Fluff Lane', state: 'CO', zip_code: 80152, city: 'Aurora', foster_program: false, rank: 9)
+    @shelter_2 = Shelter.create!(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)
+    @shelter_3 = Shelter.create!(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
 
     @pet_1 = @shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: false)
     @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
@@ -27,6 +27,18 @@ RSpec.describe Shelter, type: :model do
     describe '#search' do
       it 'returns partial matches' do
         expect(Shelter.search("Fancy")).to eq([@shelter_3])
+      end
+    end
+
+    describe '#name_and_address' do
+      it 'returns only the name and address of a shelter' do
+        matching_shelter = Shelter.name_and_address(@shelter_1.id).first
+
+        expect(matching_shelter.name).to eq('Aurora shelter')
+        expect(matching_shelter.street_address).to eq('15 Fluff Lane')
+        expect(matching_shelter.state).to eq('CO')
+        expect(matching_shelter.zip_code).to eq(80152)
+        expect(matching_shelter.city).to eq('Aurora')
       end
     end
 
@@ -84,5 +96,26 @@ RSpec.describe Shelter, type: :model do
         expect(@shelter_1.pet_count).to eq(3)
       end
     end
+
+    describe '.adoptable_pets_count' do
+      it "returns the number of pets that are currently adoptable" do
+        expect(@shelter_1.adoptable_pets_count).to eq(2)
+        expect(@shelter_3.adoptable_pets_count).to eq(1)
+      end
+    end
+
+    describe '.avg_adoptable_pet_age' do
+      it "returns the average age of adoptable pets at given shelter" do
+        expect(@shelter_1.avg_adoptable_pet_age).to eq(4)
+      end
+    end
+
+    # describe '.adopted_pets_count' do
+    #   app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
+    #   PetApplication.create!(pet: @pet_1, application: app_1)
+    #   it "returns the number of pets with approved applications(adopted)" do
+    #     expect(@shelter_1.adopted_pets_count).to eq(0)
+    #   end
+    # end
   end
 end
