@@ -20,5 +20,17 @@ RSpec.describe do
                 expect(page).to have_content("Approved")
             end
         end
+
+        it 'can reject a pet on an application' do
+            visit "/admin/applications/#{app_1.id}"
+
+            within "#app-#{pet_application_1.id}" do
+                click_button("Reject")
+                expect(current_path).to eq("/admin/applications/#{app_1.id}")
+
+                expect(page).to_not have_button("reject")
+                expect(page).to have_content("Rejected")
+            end
+        end
     end
 end

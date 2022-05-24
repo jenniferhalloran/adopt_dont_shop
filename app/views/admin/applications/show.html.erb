@@ -3,7 +3,7 @@
 <% @application.pet_applications.each do |pet_application| %>
     <div id="app-<%= pet_application.id %>">
         <% if pet_application.application_status.nil? %>
-            <p><%= pet_application.pet.name %><%= button_to "Approve", "/admin/applications/#{pet_application.id}", method: :patch, params: { application_status: "Approved"} %></p>
+            <p><%= pet_application.pet.name %><%= button_to "Approve", "/admin/applications/#{pet_application.id}", method: :patch, params: { application_status: "Approved"} %><%= button_to "Reject", "/admin/applications/#{pet_application.id}", method: :patch, params: { application_status: "Rejected"} %></p>
         <% else %>
             <p><%= pet_application.pet.name %> Application Status:<%= pet_application.application_status %></p>
     </div>
