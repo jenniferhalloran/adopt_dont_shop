@@ -15,14 +15,25 @@ describe 'admin shelter show page', type: :feature do
     expect(page).to_not have_content('RGV animal shelter')
   end
 
-  it "displays the number of adoptable pets at the shelter" do
-    Pet.create(adoptable: false, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: shelter_1.id)
-    Pet.create!(name: "Zucchini", breed: 'weenie dog', age: 7, adoptable: true, shelter_id: shelter_1.id)
-    Pet.create!(name: "Tater Tot", breed: 'french bulldog', age: 5, adoptable: true, shelter_id: shelter_1.id)
+  describe 'shelter statistics' do
+    before do
+      Pet.create(adoptable: false, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: shelter_1.id)
+      Pet.create!(name: "Zucchini", breed: 'weenie dog', age: 7, adoptable: true, shelter_id: shelter_1.id)
+      Pet.create!(name: "Tater Tot", breed: 'french bulldog', age: 5, adoptable: true, shelter_id: shelter_1.id)
+      Pet.create!(name: "Rufus", breed: 'boxer', age: 2, adoptable: true, shelter_id: shelter_1.id)
+    end
 
-    visit "/admin/shelters/#{shelter_1.id}"
-    save_and_open_page
-    expect(page).to have_content("Number of Adoptable Pets: 2")
+    it "displays the number of adoptable pets at the shelter" do
+      visit "/admin/shelters/#{shelter_1.id}"
+
+      expect(page).to have_content("Number of Adoptable Pets: 3")
+    end
+
+    it "displays the average age of adoptable pets at the shelter" do
+      visit "/admin/shelters/#{shelter_1.id}"
+
+      expect(page).to have_content("Average Age of Pets: 4.67")
+    end
   end
 
 end
