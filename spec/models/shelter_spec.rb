@@ -123,5 +123,19 @@ RSpec.describe Shelter, type: :model do
         expect(@shelter_1.adopted_pets_count).to eq(1)
       end
     end
+
+    describe '.pending_pets' do
+      it "returns the pets that have pending applications and need action" do
+        app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
+        pet_app = PetApplication.create!(pet: @pet_1, application: app_1)
+        # require "pry"; binding.pry
+        expect(@shelter_1.pending_pets).to eq([@pet_1])
+
+        pet_app.update(application_status: "Approved")
+
+        expect(@shelter_1.pending_pets).to eq([])
+
+      end
+    end
   end
 end

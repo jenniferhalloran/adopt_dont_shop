@@ -22,7 +22,7 @@ class Shelter < ApplicationRecord
   end
 
   def self.shelters_with_pending_apps
-    joins(:applications).where("applications.status = 'Pending'").order(:name)
+    joins(:applications).where("applications.status = 'Pending'").order(:name).distinct
   end
 
   def self.name_and_address(shelter_id)
@@ -51,6 +51,10 @@ class Shelter < ApplicationRecord
 
   def avg_adoptable_pet_age
     pets.where(adoptable: true).average(:age).to_f
+  end
+
+  def pending_pets
+    pets.joins(:pet_applications).where("pet_applications.application_status IS NULL")
   end
 
   def adopted_pets_count
