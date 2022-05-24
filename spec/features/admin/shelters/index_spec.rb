@@ -30,7 +30,7 @@ describe 'the admin application index page', type: :feature do
 
     visit '/admin/shelters'
     click_link('Fancy pets of Colorado')
-    
+
     expect(current_path).to eq("/admin/shelters/#{shelter_3.id}")
   end
 
@@ -65,7 +65,7 @@ describe 'the admin application index page', type: :feature do
     app_3.status = 'Pending'
     app_3.save
     visit '/admin/shelters'
-    save_and_open_page
+    
     within "#pending-shelters" do
       expect('Aurora shelter').to appear_before('Fancy pets of Colorado')
       expect('Fancy pets of Colorado').to appear_before('RGV animal shelter')

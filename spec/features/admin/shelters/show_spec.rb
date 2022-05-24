@@ -32,8 +32,14 @@ describe 'admin shelter show page', type: :feature do
     it "displays the average age of adoptable pets at the shelter" do
       visit "/admin/shelters/#{shelter_1.id}"
 
-      expect(page).to have_content("Average Age of Pets: 4.67")
+      expect(page).to have_content("Average Age of Adoptable Pets: 4.67")
     end
+
+    # it "displays the number of pets that have been adopted" do
+    #   visit "/admin/shelters/#{shelter_1.id}"
+    #
+    #   expect(page).to have_content("2 pets have bene adopted from this shelter!")
+    # end
   end
 
 end
