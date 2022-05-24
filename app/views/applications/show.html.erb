@@ -16,7 +16,7 @@
 
 <% if @application.status == "In Progress" %>
   <h3> Add a Pet to this Application: </h3>
-  <%= form_with url:"/applications/#{@application.id}", method: :get do |form| %>
+  <%= form_with url:"/applications/#{@application.id}", method: :get, local: true do |form| %>
     <%= form.label :search_by_name %>
     <%= form.text_field :search_by_name %>
     <%= form.submit "Search" %>
@@ -30,7 +30,7 @@
   <p><b> Matching Pets: </b></p>
     <% @matching_pets.each do |pet| %>
         <p> <%= pet.name %>
-          <%= button_to "Adopt this pet", "/pet_applications", method: :post, params: {:application_id => @application.id, :pet_id => pet.id} %>
+          <%= button_to "Adopt this pet", "/pet_applications/#{@application.id}", method: :post, params: {:pet_id => pet.id} %>
         </p>
     <% end  %>
   <% end  %>
@@ -38,7 +38,7 @@
 
 <% if @application.has_pets? && @application.status == "In Progress" %>
   <h3> Submit Application: </h3>
-  <%= form_with url:"/applications/#{@application.id}", method: :patch do |form| %>
+  <%= form_with url:"/applications/#{@application.id}", method: :patch, local:true do |form| %>
     <%= form.label :description, "What makes you a good fit?" %>
     <%= form.text_field :description %>
     <%= form.submit "Submit Application" %>
