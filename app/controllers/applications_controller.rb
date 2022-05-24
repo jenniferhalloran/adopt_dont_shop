@@ -14,9 +14,9 @@ class ApplicationsController < ApplicationController
 		if application.save
 			redirect_to "/applications/#{application.id}"
 		else
-			flash[:notice] = "Error: Please fill out all required fields!"
-			render :new
-			# redirect_to "/applications/new", alert: "Error: Please fill out all required fields!"
+			# flash[:notice] = "Error: Please fill out all required fields!"
+			# render :new
+			redirect_to "/applications/new", alert: "Error: Please fill out all required fields!"
 		end
 	end
 
