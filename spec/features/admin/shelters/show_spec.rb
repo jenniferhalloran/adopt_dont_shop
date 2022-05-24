@@ -17,10 +17,10 @@ describe 'admin shelter show page', type: :feature do
 
   describe 'shelter statistics' do
     before do
-      Pet.create(adoptable: false, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: shelter_1.id)
-      Pet.create!(name: "Zucchini", breed: 'weenie dog', age: 7, adoptable: true, shelter_id: shelter_1.id)
-      Pet.create!(name: "Tater Tot", breed: 'french bulldog', age: 5, adoptable: true, shelter_id: shelter_1.id)
-      Pet.create!(name: "Rufus", breed: 'boxer', age: 2, adoptable: true, shelter_id: shelter_1.id)
+    @lucille = Pet.create(adoptable: false, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: shelter_1.id)
+    @zucchini = Pet.create!(name: "Zucchini", breed: 'weenie dog', age: 7, adoptable: true, shelter_id: shelter_1.id)
+    @tot = Pet.create!(name: "Tater Tot", breed: 'french bulldog', age: 5, adoptable: true, shelter_id: shelter_1.id)
+    @rufus = Pet.create!(name: "Rufus", breed: 'naked mole rat', age: 2, adoptable: true, shelter_id: shelter_1.id)
     end
 
     it "displays the number of adoptable pets at the shelter" do
@@ -35,11 +35,24 @@ describe 'admin shelter show page', type: :feature do
       expect(page).to have_content("Average Age of Adoptable Pets: 4.67")
     end
 
-    # it "displays the number of pets that have been adopted" do
-    #   visit "/admin/shelters/#{shelter_1.id}"
-    #
-    #   expect(page).to have_content("2 pets have bene adopted from this shelter!")
-    # end
+    it "displays the number of pets that have been adopted" do
+      app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
+      PetApplication.create!(pet: @lucille, application: app_1)
+      app_2 = Application.create!(name: 'Zach', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
+      PetApplication.create!(pet: @tot, application: app_2)
+      visit "/admin/shelters/#{shelter_1.id}"
+
+      expect(page).to have_content("0 pets have been adopted from this shelter!")
+
+      app_1.status = "Approved"
+      app_1.save
+      app_2.status = "Approved"
+      app_2.save
+
+      visit "/admin/shelters/#{shelter_1.id}"
+      
+      expect(page).to have_content("2 pets have been adopted from this shelter!")
+    end
   end
 
 end

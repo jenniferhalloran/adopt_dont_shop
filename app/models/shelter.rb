@@ -52,8 +52,7 @@ class Shelter < ApplicationRecord
     pets.where(adoptable: true).average(:age).to_f
   end
 
-  # def adopted_pets_count
-  #   require "pry"; binding.pry
-  #   pets.joins(:applications).where(applications.status = "Approved").count
-  # end
+  def adopted_pets_count
+    pets.joins(:applications).where(applications: {status: "Approved"}).count
+  end
 end

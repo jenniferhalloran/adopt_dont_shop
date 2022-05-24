@@ -110,12 +110,18 @@ RSpec.describe Shelter, type: :model do
       end
     end
 
-    # describe '.adopted_pets_count' do
-    #   app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
-    #   PetApplication.create!(pet: @pet_1, application: app_1)
-    #   it "returns the number of pets with approved applications(adopted)" do
-    #     expect(@shelter_1.adopted_pets_count).to eq(0)
-    #   end
-    # end
+    describe '.adopted_pets_count' do
+      it "returns the number of pets with approved applications(adopted)" do
+        app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
+        PetApplication.create!(pet: @pet_1, application: app_1)
+
+        expect(@shelter_1.adopted_pets_count).to eq(0)
+
+        app_1.status = "Approved"
+        app_1.save
+
+        expect(@shelter_1.adopted_pets_count).to eq(1)
+      end
+    end
   end
 end
