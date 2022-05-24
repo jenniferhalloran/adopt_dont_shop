@@ -26,7 +26,7 @@ RSpec.describe "new application page" do
     fill_in("Zip code", with: 80010)
 
     click_on("Submit")
-    expect(current_path).to eq("/applications/new")
+
     expect(page).to have_content("Error: Please fill out all required fields!")
   end
 end
