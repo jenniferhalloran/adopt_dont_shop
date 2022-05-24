@@ -56,21 +56,35 @@ describe 'admin shelter show page', type: :feature do
 
     it "shows pets that have pending applications and need action" do
       app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
+      app_2 = Application.create!(name: 'Jack', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
       pet_app = PetApplication.create!(pet: @tot, application: app_1)
+      pet_app_2 = PetApplication.create!(pet: @tot, application: app_2)
 
       visit "/admin/shelters/#{shelter_1.id}"
-
       within "#action_required" do
         expect(page).to have_content("Tater Tot")
       end
 
       pet_app.update(application_status: "Rejected")
+      pet_app_2.update(application_status: "Approved")
       visit "/admin/shelters/#{shelter_1.id}"
 
       within "#action_required" do
         expect(page).to_not have_content("Tater Tot")
       end
+    end
 
+    it "has links to approve or reject the pending application" do
+      app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
+      PetApplication.create!(pet: @tot, application: app_1)
+
+      visit "/admin/shelters/#{shelter_1.id}"
+
+      within "#action_required" do
+        click_link("HERE")
+      end
+
+      expect(current_path).to eq("/admin/applications/#{app_1.id}")
     end
   end
 

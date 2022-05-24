@@ -54,7 +54,7 @@ class Shelter < ApplicationRecord
   end
 
   def pending_pets
-    pets.joins(:pet_applications).where("pet_applications.application_status IS NULL")
+    pets.joins(:pet_applications).where("pet_applications.application_status IS NULL").distinct
   end
 
   def adopted_pets_count
