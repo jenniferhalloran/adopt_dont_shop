@@ -1,8 +1,3 @@
-# Admin Shelters Show Page
-#
-# As a visitor
-# When I visit an admin shelter show page
-# Then I see that shelter's name and full address
 require 'rails_helper'
 
 describe 'admin shelter show page', type: :feature do
@@ -26,8 +21,8 @@ describe 'admin shelter show page', type: :feature do
     Pet.create!(name: "Tater Tot", breed: 'french bulldog', age: 5, adoptable: true, shelter_id: shelter_1.id)
 
     visit "/admin/shelters/#{shelter_1.id}"
+    save_and_open_page
     expect(page).to have_content("Number of Adoptable Pets: 2")
-
   end
 
 end

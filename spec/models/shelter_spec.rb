@@ -97,10 +97,10 @@ RSpec.describe Shelter, type: :model do
       end
     end
 
-    describe '.adoptable_pets'
+    describe '.adoptable_pets_count'
     it "returns the number of pets that are currently adoptable" do
-      expect(@shelter_1.adoptable_pets).to eq(2)
-      expect(@shelter_3.adoptable_pets).to eq(1)
+      expect(@shelter_1.adoptable_pets_count).to eq(2)
+      expect(@shelter_3.adoptable_pets_count).to eq(1)
     end
   end
 end

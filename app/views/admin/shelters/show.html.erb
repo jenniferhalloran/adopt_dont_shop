@@ -1,5 +1,10 @@
 <h4> <i>** Admin View **</i> </h4>
-<h2> <%= @shelter.first.name %> </h2>
+<h1> <%= @shelter.first.name %> </h1>
 <p><b>Address:</b> <br>
   <%= @shelter.first.street_address %> <br>
   <%= @shelter.first.city %>, <%= @shelter.first.state  %> <%= @shelter.first.zip_code %></p>
+
+<h3> Statistics </h3>
+<ul>
+  <li><b>Number of Adoptable Pets:</b> <%= @shelter_info.adoptable_pets_count %> </li>
+</ul>
