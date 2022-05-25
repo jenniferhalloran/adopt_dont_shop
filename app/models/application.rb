@@ -15,19 +15,16 @@ class Application < ApplicationRecord
 	end
 
 	def approved?
-		pet_applications.all?{ |pet_app| pet_app.application_status  == "Approved"  }
+		!pet_applications.any?{ |pet_app| pet_app.application_status  != "Approved"  }
 	end
 
 	def rejected?
 		pet_applications.any?{ |pet_app| pet_app.application_status  == "Rejected"  }
-
 	end
 
 	def approve_application
 		update(status: "Approved")
 		pets.each { |pet| pet.update(adoptable: false)}
-		# require "pry"; binding.pry #when I pry in here
-		# #the pet value is false
 	end
 
 	def reject_application
