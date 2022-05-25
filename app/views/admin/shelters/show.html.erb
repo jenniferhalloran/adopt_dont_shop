@@ -12,7 +12,7 @@
 </ul>
 <hr>
 <div id = "action_required">
-  <% if @shelter_info.pending_pets.count > 0 %>
+  <% if @shelter_info.has_pending_applications? %>
     <h2> Action Required: </h2>
     <h3> Pets Pending Review: </h3>
     <ul><% @shelter_info.pending_pets.each do |pet| %>

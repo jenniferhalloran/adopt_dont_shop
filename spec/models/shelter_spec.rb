@@ -128,12 +128,24 @@ RSpec.describe Shelter, type: :model do
       it "returns the pets that have pending applications and need action" do
         app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
         pet_app = PetApplication.create!(pet: @pet_1, application: app_1)
-        # require "pry"; binding.pry
         expect(@shelter_1.pending_pets).to eq([@pet_1])
 
         pet_app.update(application_status: "Approved")
 
         expect(@shelter_1.pending_pets).to eq([])
+
+      end
+    end
+
+    describe '.has_pending_applications?' do
+      it "returns true if there are pending applications" do
+        app_1 = Application.create!(name: 'Stephen', street_address: '3 Green St', city: 'Boulder', state: 'CO', zip_code: 80303)
+        pet_app = PetApplication.create!(pet: @pet_1, application: app_1)
+        expect(@shelter_1.has_pending_applications?).to eq(true)
+
+        pet_app.update(application_status: "Approved")
+
+        expect(@shelter_1.has_pending_applications?).to eq(false)
 
       end
     end
