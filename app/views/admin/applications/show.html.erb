@@ -5,7 +5,11 @@
     <div id="app-<%= pet_application.id %>">
         <% if pet_application.application_status.nil? %>
             <p><%= pet_application.pet.name %>
-              <%= button_to "Approve", "/admin/applications/#{pet_application.id}", method: :patch, params: { application_status: "Approved"} %>
+               <% if pet_application.pet.adoptable %>
+                <%= button_to "Approve", "/admin/applications/#{pet_application.id}", method: :patch, params: { application_status: "Approved"} %>
+              <% else %>
+                This pet has already been adopted.
+                <% end %>
               <%= button_to "Reject", "/admin/applications/#{pet_application.id}", method: :patch, params: { application_status: "Rejected"} %></p>
     </div>
         <% else %>
