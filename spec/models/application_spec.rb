@@ -32,29 +32,29 @@ RSpec.describe Application, type: :model do
 			end
 		end
 
-		describe ".approved?" do
+		describe ".all_approved?" do
 			it " returns true if all applications are approved" do
 				pet_application_2.update(application_status: "Approved")
 				pet_application_1.update(application_status: "Approved")
-				expect(app_1.approved?).to eq(true)
+				expect(app_1.all_approved?).to eq(true)
 			end
 
-			it " returns false if all applications are not approved" do
+			it "returns false if all applications are not approved" do
 				pet_application_1.update(application_status: "Approved")
-				expect(app_1.approved?).to eq(false)
+				expect(app_1.all_approved?).to eq(false)
 			end
 		end
 
-		describe ".rejected?" do
+		describe ".all_reviewed?" do
 			it " returns true if any applications are rejected" do
 				pet_application_2.update(application_status: "Approved")
 				pet_application_1.update(application_status: "Rejected")
-				expect(app_1.rejected?).to eq(true)
+				expect(app_1.all_reviewed?).to eq(true)
 			end
 
 			it " returns false if all applications are not rejected" do
 				pet_application_1.update(application_status: "Approved")
-				expect(app_1.rejected?).to eq(false)
+				expect(app_1.all_reviewed?).to eq(false)
 			end
 		end
 
@@ -71,7 +71,7 @@ RSpec.describe Application, type: :model do
 				Pet.find(app_1.pet_ids).each do |pet|
 					expect(pet.adoptable).to eq(true)
 				end
-				
+
 				app_1.approve_application
 				expect(app_1.status). to eq("Approved")
 
