@@ -10,3 +10,17 @@
   <li><b>Average Age of Adoptable Pets:</b> <%= @shelter_info.avg_adoptable_pet_age.round(2) %> </li>
   <li><b><%= @shelter_info.adopted_pets_count %></b> pets have been adopted from this shelter! :D </li>
 </ul>
+
+<div id = "action_required">
+  <h2> Action Required: </h2>
+  <h3> Pets Pending Review: </h3>
+  <ul><% @shelter_info.pending_pets.each do |pet| %>
+    <li> <%= pet.name %> </li>
+    <% pet.pet_applications.each do |pet_app| %>
+      <% if pet_app.application_status.nil? %>
+      <p><%= "Approve or Reject #{pet_app.application.name}'s application " %><%= link_to "HERE" , "/admin/applications/#{pet_app.application.id}"%></p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

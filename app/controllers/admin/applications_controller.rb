@@ -6,6 +6,6 @@ class Admin::ApplicationsController < ApplicationController
       @application.update(status: "Approved")
     elsif @application.rejected?
       @application.update(status: "Rejected")
-    end
   end
 end
+
