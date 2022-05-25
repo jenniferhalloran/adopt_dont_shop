@@ -63,5 +63,31 @@ RSpec.describe Application, type: :model do
 				expect(app_1.status).to eq("In Progress")
 			end
 		end
+
+		describe ".approve_application" do
+			it "changes an application status to approved and makes the pets associated to no longer adoptable" do
+				expect(app_1.status). to eq("In Progress")
+
+				Pet.find(app_1.pet_ids).each do |pet|
+					expect(pet.adoptable).to eq(true)
+				end
+				
+				app_1.approve_application
+				expect(app_1.status). to eq("Approved")
+
+				Pet.find(app_1.pet_ids).each do |pet|
+					expect(pet.adoptable).to eq(false)
+				end
+			end
+		end
+
+
+		describe ".reject_application" do
+			it "changes an application status to rejected" do
+				expect(app_1.status). to eq("In Progress")
+				app_1.reject_application
+				expect(app_1.status). to eq("Rejected")
+			end
+		end
 	end
 end
