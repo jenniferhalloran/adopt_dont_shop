@@ -34,31 +34,45 @@ RSpec.describe do
     end
 
     it 'changes the application status to approved if all pets for that application are approved' do
-            visit "/admin/applications/#{app_1.id}"
-            within "#app-#{pet_application_1.id}" do
-              click_button("Approve")
-              expect(current_path).to eq("/admin/applications/#{app_1.id}")
+      visit "/admin/applications/#{app_1.id}"
+      within "#app-#{pet_application_1.id}" do
+        click_button("Approve")
+        expect(current_path).to eq("/admin/applications/#{app_1.id}")
 
-            end
-            expect(page).to have_content("Application Status: Approved")
- 
+      end
+      expect(page).to have_content("Application Status: Approved")
+
     end
 
     it 'changes the application status to rejected if any pets for that application are rejected' do
-           pet_application_2 = PetApplication.create!(pet_id: pet_1.id, application_id: app_1.id)
+     pet_application_2 = PetApplication.create!(pet_id: pet_1.id, application_id: app_1.id)
 
-            visit "/admin/applications/#{app_1.id}"
-            within "#app-#{pet_application_1.id}" do
-              click_button("Reject")
-              expect(current_path).to eq("/admin/applications/#{app_1.id}")
+     visit "/admin/applications/#{app_1.id}"
+     within "#app-#{pet_application_1.id}" do
+      click_button("Reject")
+      expect(current_path).to eq("/admin/applications/#{app_1.id}")
 
-            end
-            within "#app-#{pet_application_2.id}" do
-              click_button("Approve")
-              expect(current_path).to eq("/admin/applications/#{app_1.id}")
-            end
-            expect(page).to have_content("Application Status: Rejected")
- 
     end
+    within "#app-#{pet_application_2.id}" do
+      click_button("Approve")
+      expect(current_path).to eq("/admin/applications/#{app_1.id}")
+    end
+    expect(page).to have_content("Application Status: Rejected")
+
   end
+
+    it 'wont show the option to approve a pet if the pet has been approved for another application' do
+     pet_application_2 = PetApplication.create!(pet_id: pet_2.id, application_id: app_2.id)
+     visit "/admin/applications/#{app_2.id}"
+     within "#app-#{pet_application_2.id}" do
+       click_button("Approve")
+     end
+      visit "/admin/applications/#{app_1.id}"
+      within "#app-#{pet_application_1.id}" do
+       expect(page).to_not have_button("Approve")
+       expect(page).to have_button("Reject")
+       expect(page).to have_content("This pet has already been adopted")
+     end
+   end
+ end
 end
