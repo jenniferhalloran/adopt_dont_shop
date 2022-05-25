@@ -36,7 +36,7 @@
   <% end  %>
 </div>
 
-<% if @application.has_pets? && @application.status == "In Progress" %>
+<% if @application.pets_added? && @application.status == "In Progress" %>
   <h3> Submit Application: </h3>
   <%= form_with url:"/applications/#{@application.id}", method: :patch, local:true do |form| %>
     <%= form.label :description, "What makes you a good fit?" %>
