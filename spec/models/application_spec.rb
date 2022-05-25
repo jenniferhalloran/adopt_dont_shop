@@ -8,6 +8,7 @@ RSpec.describe Application, type: :model do
 	let!(:pet_2) {Pet.create!(name: "Zucchini", breed: 'weenie dog', age: 7, adoptable: true, shelter_id: shelter.id)}
 
 	let!(:pet_application_1) {PetApplication.create(pet_id: pet_2.id, application_id: app_1.id)}
+	let!(:pet_application_2) {PetApplication.create(pet_id: pet_1.id, application_id: app_1.id)}
 
 	describe 'relationships' do
 		it { should have_many(:pet_applications)}
@@ -28,4 +29,29 @@ RSpec.describe Application, type: :model do
 			expect(app_2.has_pets?).to eq(false)
 		end
 	end
+		it " returns true if all applications are approved" do
+			pet_application_2.update(application_status: "Approved")
+			pet_application_1.update(application_status: "Approved")
+			expect(app_1.approved?).to eq(true)
+		end
+
+		it " returns false if all applications are not approved" do
+			pet_application_1.update(application_status: "Approved")
+			expect(app_1.approved?).to eq(false)
+		end
+
+		it " returns true if any applications are rejected" do
+			pet_application_2.update(application_status: "Approved")
+			pet_application_1.update(application_status: "Rejected")
+			expect(app_1.rejected?).to eq(true)
+		end
+
+		it " returns false if all applications are not rejected" do
+			pet_application_1.update(application_status: "Approved")
+			expect(app_1.rejected?).to eq(false)
+		end
+
+		it "sets the default value to in progress" do
+			expect(app_1.status).to eq("In Progress")
+		end
 end
