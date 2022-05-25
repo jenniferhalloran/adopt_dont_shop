@@ -14,20 +14,22 @@ class Application < ApplicationRecord
 		pets.count > 0
 	end
 
-	def approved?
-		pet_applications.all?{ |pet_app| pet_app.application_status  == "Approved"  }
+	def pets_added?
+		pet_applications.exists?
 	end
 
-	def rejected?
-		pet_applications.any?{ |pet_app| pet_app.application_status  == "Rejected"  }
+	def all_approved?
+    pet_applications.count == pet_applications.where(application_status: 'Approved').count
+	end
+
+	def all_reviewed?
+		pet_applications.count == pet_applications.where("application_status IS NOT NULL").count
 
 	end
 
 	def approve_application
 		update(status: "Approved")
 		pets.each { |pet| pet.update(adoptable: false)}
-		# require "pry"; binding.pry #when I pry in here
-		# #the pet value is false
 	end
 
 	def reject_application
