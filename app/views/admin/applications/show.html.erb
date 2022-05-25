@@ -1,5 +1,6 @@
-<h2><%= "Application ##{@application.id} for #{@application.name}" %></h2>
-<h3><%= "Application Status: #{@application.status}" %></h3>
+<h2><%= "Application ##{@application.id}" %></h2>
+
+<%= render partial: '/shared/app_display' %>
 
 <% @application.pet_applications.each do |pet_application| %>
     <div id="app-<%= pet_application.id %>">
