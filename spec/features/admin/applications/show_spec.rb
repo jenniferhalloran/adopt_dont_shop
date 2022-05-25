@@ -48,7 +48,6 @@ RSpec.describe do
            pet_application_2 = PetApplication.create!(pet_id: pet_1.id, application_id: app_1.id)
 
             visit "/admin/applications/#{app_1.id}"
-save_and_open_page
             within "#app-#{pet_application_1.id}" do
               click_button("Reject")
               expect(current_path).to eq("/admin/applications/#{app_1.id}")
