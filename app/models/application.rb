@@ -25,7 +25,7 @@ class Application < ApplicationRecord
 
 	def approve_application
 		update(status: "Approved")
-		pets.each { |pet| pet.update(adoptable: false)}
+		pets.all.map { |pet| pet.update(adoptable: false)}
 	end
 
 	def reject_application
