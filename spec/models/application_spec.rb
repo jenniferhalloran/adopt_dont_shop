@@ -24,34 +24,70 @@ RSpec.describe Application, type: :model do
 	end
 
 	describe "instance methods" do
-		it "returns true if the application has 1 or more pets" do
-			expect(app_1.has_pets?).to eq(true)
-			expect(app_2.has_pets?).to eq(false)
+
+		describe ".has_pets?" do
+			it "returns true if the application has 1 or more pets" do
+				expect(app_1.has_pets?).to eq(true)
+				expect(app_2.has_pets?).to eq(false)
+			end
+		end
+
+		describe ".approved?" do
+			it " returns true if all applications are approved" do
+				pet_application_2.update(application_status: "Approved")
+				pet_application_1.update(application_status: "Approved")
+				expect(app_1.approved?).to eq(true)
+			end
+
+			it " returns false if all applications are not approved" do
+				pet_application_1.update(application_status: "Approved")
+				expect(app_1.approved?).to eq(false)
+			end
+		end
+
+		describe ".rejected?" do
+			it " returns true if any applications are rejected" do
+				pet_application_2.update(application_status: "Approved")
+				pet_application_1.update(application_status: "Rejected")
+				expect(app_1.rejected?).to eq(true)
+			end
+
+			it " returns false if all applications are not rejected" do
+				pet_application_1.update(application_status: "Approved")
+				expect(app_1.rejected?).to eq(false)
+			end
+		end
+
+		describe ".default_values" do
+			it "sets the default value to in progress" do
+				expect(app_1.status).to eq("In Progress")
+			end
+		end
+
+		describe ".approve_application" do
+			it "changes an application status to approved and makes the pets associated to no longer adoptable" do
+				expect(app_1.status). to eq("In Progress")
+
+				Pet.find(app_1.pet_ids).each do |pet|
+					expect(pet.adoptable).to eq(true)
+				end
+				
+				app_1.approve_application
+				expect(app_1.status). to eq("Approved")
+
+				Pet.find(app_1.pet_ids).each do |pet|
+					expect(pet.adoptable).to eq(false)
+				end
+			end
+		end
+
+
+		describe ".reject_application" do
+			it "changes an application status to rejected" do
+				expect(app_1.status). to eq("In Progress")
+				app_1.reject_application
+				expect(app_1.status). to eq("Rejected")
+			end
 		end
 	end
-		it " returns true if all applications are approved" do
-			pet_application_2.update(application_status: "Approved")
-			pet_application_1.update(application_status: "Approved")
-			expect(app_1.approved?).to eq(true)
-		end
-
-		it " returns false if all applications are not approved" do
-			pet_application_1.update(application_status: "Approved")
-			expect(app_1.approved?).to eq(false)
-		end
-
-		it " returns true if any applications are rejected" do
-			pet_application_2.update(application_status: "Approved")
-			pet_application_1.update(application_status: "Rejected")
-			expect(app_1.rejected?).to eq(true)
-		end
-
-		it " returns false if all applications are not rejected" do
-			pet_application_1.update(application_status: "Approved")
-			expect(app_1.rejected?).to eq(false)
-		end
-
-		it "sets the default value to in progress" do
-			expect(app_1.status).to eq("In Progress")
-		end
 end

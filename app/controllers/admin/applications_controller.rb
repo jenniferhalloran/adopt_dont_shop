@@ -3,10 +3,9 @@ class Admin::ApplicationsController < ApplicationController
   def show
     @application = Application.find(params[:id])
     if @application.approved?
-      @application.update(status: "Approved")
+      @application.approve_application
     elsif @application.rejected?
-      @application.update(status: "Rejected")
+      @application.reject_application
     end
   end
 end
-
