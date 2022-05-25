@@ -25,10 +25,10 @@ RSpec.describe Application, type: :model do
 
 	describe "instance methods" do
 
-		describe ".has_pets?" do
+		describe ".pets_added?" do
 			it "returns true if the application has 1 or more pets" do
-				expect(app_1.has_pets?).to eq(true)
-				expect(app_2.has_pets?).to eq(false)
+				expect(app_1.pets_added?).to eq(true)
+				expect(app_2.pets_added?).to eq(false)
 			end
 		end
 
