@@ -1,5 +1,8 @@
 # Adopt, don't Shop
 
+### Updated database design
+![Screen Shot 2022-05-26 at 11 07 59 AM](https://user-images.githubusercontent.com/48455658/170517146-16f1a446-4922-48b4-a4d1-d0ea444018fa.png)
+
 ### Existing database design
 ![visual-schema.png](https://i.postimg.cc/0ywZgQ1W/visual-schema.png)
 
